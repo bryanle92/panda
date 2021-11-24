@@ -29,7 +29,7 @@ const struct lookup_t FORD_LOOKUP_ANGLE_RATE_DOWN = {
 
 const int FORD_DEG_TO_CAN = 10;
 
-static int ford_rx_hook(CAN_FIFOMailBox_TypeDef *to_push)
+static int ford_rx_hook(CANPacket_t *to_push)
 {
   int bus = GET_BUS(to_push);
   int addr = GET_ADDR(to_push);
@@ -69,7 +69,7 @@ static int ford_rx_hook(CAN_FIFOMailBox_TypeDef *to_push)
 // else
 //     block all commands that produce actuation
 
-static int ford_tx_hook(CAN_FIFOMailBox_TypeDef *to_send)
+static int ford_tx_hook(CANPacket_t *to_send)
 {
   int tx = 1;
   int addr = GET_ADDR(to_send);
@@ -117,7 +117,7 @@ static int ford_tx_hook(CAN_FIFOMailBox_TypeDef *to_send)
   return tx;
 }
 
-static int ford_fwd_hook(int bus_num, CAN_FIFOMailBox_TypeDef *to_fwd)
+static int ford_fwd_hook(int bus_num, CANPacket_t *to_fwd)
 {
   int bus_fwd = -1;
   int addr = GET_ADDR(to_fwd);
